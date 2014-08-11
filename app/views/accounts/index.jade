@@ -10,10 +10,10 @@ block content
         th Date Opened
     tbody
       each account in accounts
-        tr
-          td= account.name
-          td= account.balance
+        tr(style='background-color:#{account.color};)
+          td= a(href='/accounts/#{account._id}')= account.name
           td= account.type
-          td= account.date
+          td= account.balance
+          td= account.opened
 
 
