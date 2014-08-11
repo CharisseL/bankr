@@ -15,6 +15,7 @@ function Account(acct){
   this.color   = acct.color;
   this.photo   = acct.photo;
   this.transactions = [];
+  this.transfers =[];
 }
 
 //if pin doesn't equal, stop function
@@ -37,13 +38,33 @@ Account.prototype.addTrans = function(t){
   this.transactions[this.transactions.length-1].id = this.transactions.length;
 };
 
+Account.prototype.transfer = function(acct, amt){
+  if(this.balance <= (amt +25)){ return 0; }
+  amt = parseFloat(amt);
+  this.balance -+ (amt + 25);
+  acct.balance += amt;
+
+  var t = new Transfer(acc.name, this.name, amt);
+
+  this.transfers.push(t);
+  this.transfers[this.transfers.length-1].fee = 25;
+  this.transfers[this.transfers.length-1].id =this.transfers.length;
+  acct.transfers.push(t);
+  acct.transfers[acct.transfers.length-1].id= acct.transfer.length;
+};
+
 Account.prototype.save = function(cb){
   Account.collection.save(this, cb);
 };
+    var accounts = objects.map(function(p){
+      return changePrototype(p);
+    });
+    cb(null, account);
+  });
+};
 
-Account.findById = function(id, cb){
+Account.except = function(id, cb){
   var _id = Mongo.ObjectID(id);
-
   Account.collection.findOne({_id:_id}, function(err, obj){
     var account = changePrototype(obj);
     cb(null, account);
